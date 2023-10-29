@@ -111,8 +111,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
                 <version>3.5.10</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
