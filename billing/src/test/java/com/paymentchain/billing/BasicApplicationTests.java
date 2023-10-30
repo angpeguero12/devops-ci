@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BasicApplicationTests {
- //prueba ngro
+ //prueba ngro 2 30 Oct
  @Test
  public void contextLoads() {
  	    String meessage= "default message cambio test devops";
