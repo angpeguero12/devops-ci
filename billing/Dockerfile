@@ -1,55 +1,10 @@
-################################## DockerFile ##################
-
-FROM jenkins/jenkins
-
-USER root
-
-#Define variables
-
-ENV MAVEN_VERSION 3.9.0
-
-
-##prueba rama feaute
-#Update Base OS and install additional tools
-
-RUN apt-get update && apt-get install -y wget
-
-RUN  wget --no-verbose https://downloads.apache.org/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz -P /tmp/
-
-RUN tar xzf /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz -C /opt/
-
-RUN ln -s  /opt/apache-maven-$MAVEN_VERSION /opt/maven
-
-RUN ln -s /opt/maven/bin/mvn /usr/local/bin
-
-RUN rm /tmp/apache-maven-$MAVEN_VERSION-bin.tar.gz
-
-
-
-
-
-
-
-# Update https://stackoverflow.com/questions/38675925/is-it-possible-to-install-only-the-docker-cli-and-not-the-daemon
-
-ENV DOCKERVERSION=18.03.1-ce
-
-RUN curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKERVERSION}.tgz \
-
-  && tar xzvf docker-${DOCKERVERSION}.tgz --strip 1 \
-
-                 -C /usr/local/bin docker/docker \
-
-  && rm docker-${DOCKERVERSION}.tgz
-
-
-
-#Set up permissions
-
-RUN chown jenkins:jenkins /opt/maven;
-
-ENV MAVEN_HOME=/opt/mvn
-
-USER jenkins
-
-################################## DockerFile ##################
+FROM openjdk:8-jdk-alpine
+RUN addgroup -S devopsc && adduser -S javams -G devopsc
+USER javams:devopsc
+ENV JAVA_OPTS=""
+ARG JAR_FILE
+ADD ${JAR_FILE} app.jar
+ # use a volume is mor efficient and speed that filesystem
+VOLUME /tmp
+EXPOSE 7280
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
