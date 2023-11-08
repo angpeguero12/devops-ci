@@ -4,7 +4,7 @@ FROM jenkins/jenkins
 
 USER root
 
-#Define variables prue
+#Define variables prued
 
 ENV MAVEN_VERSION 3.9.5
 
